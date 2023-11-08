@@ -62,7 +62,34 @@ Tips:
 Esta vez ejecuta el comando `docker compose` de este modo:
 
 ```
-docker compose up -d 
+docker compose up -d --build 
 ```
 
-La opción -d permite 
+La opción `-d` permite dejar ejecutando los servicios y libera la consola.
+
+### Actividades
+
+Ejecuta `docker ps`. 
+
+¿Qué obtienes?.
+
+Ejecuta `docker images`. 
+
+¿Cuál es el tamaño de la imagen del servidor flask?
+
+¿Cuál es el tamaño de la imagen postgres?
+
+¿Cuándo fueron creadas cada una de las imágenes?
+
+Ahora ejecuta `docker compose logs -f`, esto te permite revisar el log de los contenedores.
+
+Si navegas hacia la aplicación (http://localhost:8000/) se produce un error, revisa el log.
+
+¿Cuál es la causa del error?
+
+Cierra el log presionando `control-c`, luego detén la aplicación con este comando:
+
+```
+docker compose down
+```
+

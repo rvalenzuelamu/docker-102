@@ -19,7 +19,7 @@ Cuando aparezca la pregunta `What is the command to run your app?`, escribe `pyt
 Abre el archivo `compose.yaml`, en la línea 16, debajo de la sección `ports` agrega estas líneas:
 
 ```
-    enviroment:
+    environment:
       - PORT
       - HOST
       - DB

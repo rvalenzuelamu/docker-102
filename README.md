@@ -93,3 +93,42 @@ Cierra el log presionando `control-c`, luego detén la aplicación con este coma
 docker compose down
 ```
 
+## Parte 3
+
+Vamos a agregar un servicio adicional para migrar nuestra base de datos, esto nos permitirá crear las tablas que faltan.
+
+Revisa el contenido de la carpeta `db/sql_migrations`, los archivos con extensión `.sql` contienen las instrucciones para crear la tabla que falta y agregarle datos.
+
+Agrega este servicio después del servicio `db` y antes de la definición de los volumenes:
+
+```
+  flyway:
+    image: flyway/flyway:7.7.0
+    environment:
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB
+      - POSTGRES_PORT=5432
+      - HOST
+      - FLYWAY_USER=${DB_USERNAME}
+      - FLYWAY_PASSWORD=${DB_PASSWORD}
+      - FLYWAY_URL=jdbc:postgresql://db:5432/${DB}
+      - FLYWAY_GROUP=true
+    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - ./db/sql_migrations:/flyway/sql
+    depends_on:
+      - db
+```
+
+Levanta la aplicación:
+
+```
+docker compose up -d --build
+```
+
+Revisa los logs para asegurarte que todo funciona correctamente.
+
+Si todo está bien deberías navegar a la aplicación y ver los dos libros que ingresamos en la migración.
+
+Agrega todos los cambios y has un git commit y luego un push para uw queden en tu fork.
